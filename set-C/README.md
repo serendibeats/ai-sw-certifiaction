@@ -24,17 +24,37 @@
 | 7 | 쿠폰 + 주문 환불 | 환불 금액 검증, 재고 복원 |
 | 8 | 데이터 검증 + 보고서 | 검증 규칙 소급 적용 |
 
-## 진행 방법
+## 진행 순서
+
+| 순서 | 내용 |
+|------|------|
+| 1 | **Step 1 → Step 8**까지 **한 번에 하나씩** `prompts/stepN.md`만 보고 구현 |
+| 2 | 각 단계 구현 후 **해당 단계 테스트** 실행: `pytest tests/test_stepN.py -v` |
+| 3 | 8단계까지 끝나면 **전체 테스트**와 **통합 테스트**로 최종 채점 |
+
+## 진행 방법 (환경·명령어)
 
 ```bash
-# 1. src/ 초기화
-cd src && for f in *.py; do [ "$f" != "__init__.py" ] && echo "" > "$f"; done && cd ..
+cd set-C
 
-# 2. 프롬프트 순차 제공 (step1.md → step8.md)
+# (선택) 처음부터 할 때만: src/ 비우기 (__init__.py 제외)
+# cd src && for f in *.py; do [ "$f" != "__init__.py" ] && echo "" > "$f"; done && cd ..
 
-# 3. 채점
-python3 -m pytest tests/ -v                   # 전체
-python3 -m pytest tests/test_final.py -v      # 핵심
+# 단계별 검증 (N = 1~8)
+python3 -m pytest tests/test_step1.py -v   # Step 1 완료 후
+# ... test_step2.py ~ test_step8.py 동일
+
+# 최종 채점
+python3 -m pytest tests/ -v                   # 전체 173개
+python3 -m pytest tests/test_final.py -v     # 핵심 66개 (등급용)
 ```
+
+## 시험 규칙
+
+- **순서 엄수**: step1 → step2 → … → step8 순서대로만 진행.
+- **테스트 미공개**: 각 step을 풀 때 해당 step의 **테스트 파일은 보지 않고** `stepN.md` 요구사항만 보고 구현.
+- **한 세션에서**: 가능하면 같은 대화/세션에서 step1~8을 이어서 진행해 컨텍스트 유지.
+
+---
 
 상세 가이드: [docs/EXAM_GUIDE.md](../docs/EXAM_GUIDE.md)
