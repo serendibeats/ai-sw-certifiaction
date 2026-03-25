@@ -70,18 +70,17 @@ pip install pytest
 # 1) 응시자 셋 디렉토리로 이동
 cd candidate-D
 
-# 2) Step 1 프롬프트 확인
-python3 exam_runner.py show
+# 2) 프롬프트 확인 → AI에게 제공 → 코드 생성 → 테스트 → 다음 단계
+python3 exam_runner.py show      # 현재 단계 프롬프트 확인
+python3 exam_runner.py test      # 현재 단계 테스트 실행
+python3 exam_runner.py next      # 테스트 통과 후 다음 단계로
+python3 exam_runner.py prev      # 이전 단계로 돌아가기
+python3 exam_runner.py status    # 진행 상태 확인
 
-# 3) AI에게 프롬프트 순차 제공
-#    prompts/step1.md → step8.md 순서대로 하나씩 전달
-#    AI가 src/ 에 코드를 생성/수정하도록 함
-
-# 4) 테스트 통과 후 다음 단계로
-python3 exam_runner.py next
-
-# 5) Step 2 ~ Step 8까지 반복
+# 3) Step 1 ~ Step 8까지 반복
 ```
+
+`prompts/`에는 현재 단계의 프롬프트 파일만 존재합니다. `next`/`prev` 시 자동으로 교체됩니다.
 
 ### 3.3 중요 규칙
 
