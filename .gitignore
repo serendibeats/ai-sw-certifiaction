@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+.exam_state.json
+dist/
+ai-sw-exam-candidate.zip
+ai-sw-exam-grader.zip
