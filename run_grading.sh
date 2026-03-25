@@ -2,21 +2,21 @@
 # AI SW 역량 인증 시험 — 채점 스크립트
 #
 # 사용법:
-#   ./run_grading.sh <set-name> <submission-src-dir>
+#   ./run_grading.sh <grader-dir> <submission-src-dir>
 #
 # 예시:
-#   ./run_grading.sh set-C /path/to/submission/src/
-#   ./run_grading.sh set-D ./submitted_src/
+#   ./run_grading.sh grader-C /path/to/submission/src/
+#   ./run_grading.sh grader-D ./submitted_src/
 
 SET_NAME=${1:-""}
 SUBMISSION_DIR=${2:-""}
 
 if [ -z "$SET_NAME" ] || [ -z "$SUBMISSION_DIR" ]; then
-    echo "사용법: ./run_grading.sh <set-name> <submission-src-dir>"
+    echo "사용법: ./run_grading.sh <grader-dir> <submission-src-dir>"
     echo ""
     echo "예시:"
-    echo "  ./run_grading.sh set-C /path/to/submission/src/"
-    echo "  ./run_grading.sh set-D ./submitted_src/"
+    echo "  ./run_grading.sh grader-C /path/to/submission/src/"
+    echo "  ./run_grading.sh grader-D ./submitted_src/"
     exit 1
 fi
 
