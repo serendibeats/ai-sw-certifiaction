@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """exam_runner.py 빌드 스크립트.
 
-각 셋의 step2~8 프롬프트를 암호화하여 exam_runner.py에 내장하고,
+각 셋의 step1~8 프롬프트를 암호화하여 exam_runner.py에 내장하고,
 .pyc로 컴파일합니다.
 
 사용법:
@@ -28,9 +28,9 @@ def encode_prompt(text: str) -> str:
 
 
 def build_runner(set_dir: str, output_dir: str, no_compile: bool = False):
-    # 원본 prompts에서 step2~8 읽기
+    # 원본 prompts에서 step1~8 읽기
     prompts = {}
-    for step in range(2, 9):
+    for step in range(1, 9):
         path = os.path.join(set_dir, "prompts", f"step{step}.md")
         if os.path.exists(path):
             with open(path) as f:

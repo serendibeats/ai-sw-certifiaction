@@ -39,17 +39,33 @@ echo "출력:   $ROOT_DIR/"
 echo ""
 
 # ===========================
-# 1. 채점자용 빌드 (원본 복사)
+# 1. 참조 구현 + 채점자용 빌드
 # ===========================
-echo "--- 채점자용 빌드 ---"
+echo "--- 참조 구현 + 채점자용 빌드 ---"
 
 for L in $SETS; do
     SET="set-${L}"
+
+    # --- reference-X: 참조 구현 (src/만) ---
+    REF_TARGET="$ROOT_DIR/reference-${L}"
+    echo "  reference-${L} 생성..."
+    rm -rf "$REF_TARGET"
+    mkdir -p "$REF_TARGET/src"
+    cp "$SCRIPT_DIR/$SET/src/"*.py "$REF_TARGET/src/"
+
+    # --- grader-X: 테스트 + 빈 src/ ---
     TARGET="$ROOT_DIR/grader-${L}"
     echo "  grader-${L} 생성..."
-
     rm -rf "$TARGET"
     cp -r "$SCRIPT_DIR/$SET" "$TARGET"
+
+    # grader/src/ 비우기 (__init__.py만 남기고 삭제, 참조 구현은 reference-X에 보관)
+    for f in "$TARGET/src/"*.py; do
+        fname=$(basename "$f")
+        if [ "$fname" != "__init__.py" ]; then
+            rm "$f"
+        fi
+    done
 
     # __pycache__ 정리
     find "$TARGET" -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
@@ -65,7 +81,7 @@ fi
 # 채점자용 README
 cp "$SCRIPT_DIR/grader_README.md" "$ROOT_DIR/grader-README.md"
 
-echo "  채점자용 완료."
+echo "  참조 구현 + 채점자용 완료."
 echo ""
 
 # ===========================
@@ -81,11 +97,11 @@ for L in $SETS; do
     rm -rf "$TARGET"
     cp -r "$SCRIPT_DIR/$SET" "$TARGET"
 
-    # --- src/ 비우기 ---
+    # --- src/ 비우기 (__init__.py만 남기고 삭제) ---
     for f in "$TARGET/src/"*.py; do
         fname=$(basename "$f")
         if [ "$fname" != "__init__.py" ]; then
-            echo "# TODO: implement this module" > "$f"
+            rm "$f"
         fi
     done
 

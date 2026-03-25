@@ -30,12 +30,12 @@ if [ ! -d "$SUBMISSION_DIR" ]; then
     exit 1
 fi
 
-# 채점 후 grader/src/ 를 비우는 cleanup (정상/비정상 종료 모두)
+# 채점 후 grader/src/ 정리 (정상/비정상 종료 모두)
 cleanup() {
     for f in "$SET_NAME/src/"*.py; do
         fname=$(basename "$f")
         if [ "$fname" != "__init__.py" ]; then
-            echo "" > "$f"
+            rm -f "$f"
         fi
     done
 }
@@ -46,15 +46,11 @@ echo "=== 채점: $SET_NAME ==="
 echo "제출물: $SUBMISSION_DIR"
 echo ""
 
-for f in "$SET_NAME/src/"*.py; do
+for f in "$SUBMISSION_DIR/"*.py; do
+    [ ! -f "$f" ] && continue
     fname=$(basename "$f")
-    if [ "$fname" != "__init__.py" ]; then
-        if [ -f "$SUBMISSION_DIR/$fname" ]; then
-            cp "$SUBMISSION_DIR/$fname" "$f"
-        else
-            echo "Warning: $fname 누락"
-        fi
-    fi
+    [ "$fname" = "__init__.py" ] && continue
+    cp "$f" "$SET_NAME/src/$fname"
 done
 
 echo "--- 전체 테스트 ---"
