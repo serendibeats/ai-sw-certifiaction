@@ -146,19 +146,22 @@ def cmd_next():
         print("모든 단계를 완료했습니다!")
         return
 
-    # 현재 단계 테스트 실행
-    print(f"=== Step {step} 테스트 확인 중... ===")
-    print()
-    passed = _run_test(step)
-
-    if not passed:
+    # 이미 통과한 단계는 테스트 생략
+    if step in state.get("passed_steps", []):
+        print(f"Step {step}은 이미 통과했습니다. 다음 단계로 이동합니다.")
+    else:
+        # 현재 단계 테스트 실행
+        print(f"=== Step {step} 테스트 확인 중... ===")
         print()
-        print(f"Step {step} 테스트를 통과하지 못했습니다.")
-        print(f"프롬프트 확인: python3 exam_runner.py show")
-        return
+        passed = _run_test(step)
 
-    # 통과 기록
-    if step not in state.get("passed_steps", []):
+        if not passed:
+            print()
+            print(f"Step {step} 테스트를 통과하지 못했습니다.")
+            print(f"프롬프트 확인: python3 exam_runner.py show")
+            return
+
+        # 통과 기록
         state.setdefault("passed_steps", []).append(step)
 
     next_step = step + 1
