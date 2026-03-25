@@ -5,3 +5,4 @@ __pycache__/
 dist/
 ai-sw-exam-candidate.zip
 ai-sw-exam-grader.zip
+_build/dist/
