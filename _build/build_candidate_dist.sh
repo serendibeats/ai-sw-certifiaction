@@ -78,9 +78,6 @@ if [ -d "$SCRIPT_DIR/docs" ]; then
     cp -r "$SCRIPT_DIR/docs" "$ROOT_DIR/docs"
 fi
 
-# 채점자용 README
-cp "$SCRIPT_DIR/grader_README.md" "$ROOT_DIR/grader-README.md"
-
 echo "  참조 구현 + 채점자용 완료."
 echo ""
 
@@ -127,9 +124,10 @@ for L in $SETS; do
 python3 exam_runner.py show      # 현재 단계 프롬프트 확인
 # AI 에이전트에게 프롬프트를 제공하여 src/에 코드 생성
 python3 exam_runner.py next      # 테스트 통과 후 다음 단계로
+python3 exam_runner.py prev      # 이전 단계로 돌아가기
 \`\`\`
 
-Step 1 프롬프트는 \`prompts/step1.md\`에 있습니다. Step 2~8은 이전 단계 통과 후 자동 해제됩니다.
+\`prompts/\`에는 현재 단계의 프롬프트 파일만 존재합니다. \`next\`/\`prev\` 시 자동으로 교체됩니다.
 
 ## 규칙
 
@@ -155,8 +153,6 @@ build_exam_runner_so('$TARGET/exam_runner.py', '$TARGET')
     echo "    완료"
 done
 
-# 응시자용 README
-cp "$SCRIPT_DIR/candidate_README.md" "$ROOT_DIR/candidate-README.md"
 
 echo ""
 echo "  응시자용 완료."

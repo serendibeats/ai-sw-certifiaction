@@ -43,10 +43,12 @@ python3 exam_runner.py status    # 현재 진행 상태 확인
 python3 exam_runner.py show      # 현재 단계 프롬프트 표시
 python3 exam_runner.py test      # 현재 단계 테스트 실행
 python3 exam_runner.py next      # 테스트 통과 후 다음 단계로
+python3 exam_runner.py prev      # 이전 단계로 돌아가기
 ```
 
-- `next` 명령이 현재 단계 테스트를 통과하면, 다음 프롬프트가 자동으로 `prompts/` 에 저장됩니다.
-- Step 2~8 프롬프트는 이전 단계 테스트를 통과해야 열람할 수 있습니다.
+- `next` 시 현재 프롬프트가 삭제되고, 다음 프롬프트만 `prompts/`에 저장됩니다.
+- `prev` 시 현재 프롬프트가 삭제되고, 이전 프롬프트가 복원됩니다.
+- `prompts/`에는 항상 현재 단계의 프롬프트 파일 하나만 존재합니다.
 
 ## 시험 규칙
 

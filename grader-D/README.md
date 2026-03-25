@@ -28,7 +28,7 @@
 
 ```bash
 # 1. src/ 초기화
-cd src && for f in *.py; do [ "$f" != "__init__.py" ] && echo "" > "$f"; done && cd ..
+cd src && for f in *.py; do [ "$f" != "__init__.py" ] && rm "$f"; done && cd ..
 
 # 2. 프롬프트 순차 제공 (step1.md → step8.md)
 

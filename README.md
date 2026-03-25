@@ -10,37 +10,31 @@
 ├── candidate-E/          # 응시자용 — 데이터 파이프라인
 ├── candidate-F/          # 응시자용 — 메시징 & 알림
 │
-├── grader-C~F/           # 채점자용 — 테스트 소스 + test_final (src/ 는 빈 상태)
+├── grader-C~F/           # 채점용 테스트 (src/에 __init__.py만 존재)
 ├── reference-C~F/        # 참조 구현 — 100% 통과 레퍼런스 코드
 │
-├── candidate-README.md   # 응시자 안내
-├── grader-README.md      # 채점자 안내
 ├── run_grading.sh        # 채점 자동화 스크립트
 ├── run_reference_check.sh # 참조 구현 검증 스크립트
 ├── docs/                 # 시험 설계 · 검증 리포트
 └── _build/               # 빌드 원본 및 도구 (재빌드 시에만 사용)
 ```
 
-- **candidate-X**: src/ 비어있음, 테스트는 `.so` 네이티브 바이너리, test_final 미포함
-- **grader-X**: src/ 빈 상태 (채점 시 candidate 코드 복사), 전체 테스트 소스 + test_final 포함
-- **reference-X**: 전체 테스트 100% 통과하는 참조 구현 (읽기 전용)
+## 응시 방법
 
-## 사용 방법
-
-### 응시자
+각 candidate-X/ 폴더의 README를 참고하세요. 요약:
 
 ```bash
 cd candidate-C
-python3 exam_runner.py show      # Step 1 프롬프트 확인
-# AI 에이전트에게 프롬프트를 제공하여 src/ 에 코드 구현
+python3 exam_runner.py show      # 현재 단계 프롬프트 확인
+python3 exam_runner.py test      # 현재 단계 테스트 실행
 python3 exam_runner.py next      # 테스트 통과 후 다음 단계로
-# step1 ~ step8 반복
+python3 exam_runner.py prev      # 이전 단계로 돌아가기
 ```
 
-### 채점자
+## 채점 방법
 
 ```bash
-# 자동 채점 (권장)
+# 자동 채점
 ./run_grading.sh grader-C candidate-C/src/
 
 # 참조 구현 검증
@@ -63,6 +57,14 @@ test_final.py 통과율 기반:
 
 - **응시자**: Ubuntu 24.04 LTS, Python 3.12, x86_64, pytest
 - **채점자**: Python 3.12, pytest
+
+## 배포판 재빌드
+
+```bash
+cd _build && bash build_candidate_dist.sh
+```
+
+빌드 요구사항: Ubuntu 24.04 LTS, Python 3.12, Cython, gcc, python3-dev
 
 ## 상세 문서
 

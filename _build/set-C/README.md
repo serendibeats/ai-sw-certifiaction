@@ -72,7 +72,7 @@ cd grader-C
 `src/`를 비우고 Step 1부터 구현할 때만 실행. `__init__.py`는 비우지 않습니다.
 
 ```bash
-cd src && for f in *.py; do [ "$f" != "__init__.py" ] && echo "" > "$f"; done && cd ..
+cd src && for f in *.py; do [ "$f" != "__init__.py" ] && rm "$f"; done && cd ..
 ```
 
 ### 단계별 검증 (N = 1 ~ 8)
