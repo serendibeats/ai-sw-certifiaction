@@ -56,17 +56,17 @@ test_final.py 통과율 기반:
 - **[시험 가이드](docs/EXAM_GUIDE.md)** — 시험 설계 철학, 진행 방법, 채점 기준
 - **[검증 리포트](docs/REVIEW_REPORT.md)** — Claude Opus 4.6 검증 결과, 실패 유형 분석
 
-## 배포판 빌드
+## 배포판 재빌드
 
-응시자용 배포판은 테스트를 Cython 네이티브 바이너리(`.so`)로 컴파일하여 디컴파일을 방지합니다.
+테스트를 수정하여 재빌드가 필요한 경우, `_build/` 디렉토리의 도구를 사용합니다.
 
 ```bash
-# 빌드 요구사항 (빌드 머신에만 필요, 응시자 환경에는 불필요)
+# 빌드 요구사항 (빌드 머신에만 필요)
 sudo apt install python3-dev gcc
 pip install cython
 
-# 배포판 생성
-./build_candidate_dist.sh
+# 배포판 재생성
+cd _build && bash build_candidate_dist.sh
 ```
 
 빌드 환경: Ubuntu 24.04 LTS, Python 3.12, x86_64
