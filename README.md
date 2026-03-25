@@ -31,6 +31,8 @@ python3 exam_runner.py next      # 테스트 통과 후 다음 단계로
 python3 exam_runner.py prev      # 이전 단계로 돌아가기
 ```
 
+이미 통과한 단계는 `next` 시 테스트 없이 바로 넘어갑니다.
+
 ## 채점 방법
 
 ```bash
