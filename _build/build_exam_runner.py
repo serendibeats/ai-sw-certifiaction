@@ -6,7 +6,7 @@
 
 사용법:
     python3 build_exam_runner.py <set-dir> <output-dir>
-    python3 build_exam_runner.py dist/candidate/set-C dist/candidate/set-C
+    python3 build_exam_runner.py set-C dist/candidate-C
 """
 import base64
 import os

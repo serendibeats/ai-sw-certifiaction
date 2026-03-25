@@ -5,25 +5,25 @@
 ## 구조
 
 ```
-├── candidate-C/        # 응시자용 — 전자상거래 시스템
-├── candidate-D/        # 응시자용 — 태스크/프로젝트 관리
-├── candidate-E/        # 응시자용 — 데이터 파이프라인
-├── candidate-F/        # 응시자용 — 메시징 & 알림
+├── candidate-C/          # 응시자용 — 전자상거래 시스템
+├── candidate-D/          # 응시자용 — 태스크/프로젝트 관리
+├── candidate-E/          # 응시자용 — 데이터 파이프라인
+├── candidate-F/          # 응시자용 — 메시징 & 알림
 │
-├── grader-C/           # 채점자용 — 전자상거래 시스템
-├── grader-D/           # 채점자용 — 태스크/프로젝트 관리
-├── grader-E/           # 채점자용 — 데이터 파이프라인
-├── grader-F/           # 채점자용 — 메시징 & 알림
+├── grader-C~F/           # 채점자용 — 테스트 소스 + test_final (src/ 는 빈 상태)
+├── reference-C~F/        # 참조 구현 — 100% 통과 레퍼런스 코드
 │
-├── candidate-README.md # 응시자 안내
-├── grader-README.md    # 채점자 안내
-├── run_grading.sh      # 채점 자동화 스크립트
-├── docs/               # 시험 설계 · 검증 리포트
-└── _build/             # 빌드 원본 및 도구 (재빌드 시에만 사용)
+├── candidate-README.md   # 응시자 안내
+├── grader-README.md      # 채점자 안내
+├── run_grading.sh        # 채점 자동화 스크립트
+├── run_reference_check.sh # 참조 구현 검증 스크립트
+├── docs/                 # 시험 설계 · 검증 리포트
+└── _build/               # 빌드 원본 및 도구 (재빌드 시에만 사용)
 ```
 
 - **candidate-X**: src/ 비어있음, 테스트는 `.so` 네이티브 바이너리, test_final 미포함
-- **grader-X**: 참조 구현 포함, 전체 테스트 소스 + test_final 포함
+- **grader-X**: src/ 빈 상태 (채점 시 candidate 코드 복사), 전체 테스트 소스 + test_final 포함
+- **reference-X**: 전체 테스트 100% 통과하는 참조 구현 (읽기 전용)
 
 ## 사용 방법
 
@@ -40,14 +40,11 @@ python3 exam_runner.py next      # 테스트 통과 후 다음 단계로
 ### 채점자
 
 ```bash
-# 응시자 제출물(src/) 복사 후 채점
-cp /path/to/submission/src/*.py grader-C/src/
-cd grader-C
-python3 -m pytest tests/ -v                   # 전체 테스트
-python3 -m pytest tests/test_final.py -v      # 통합 테스트 (핵심)
+# 자동 채점 (권장)
+./run_grading.sh grader-C candidate-C/src/
 
-# 또는 자동 채점
-./run_grading.sh grader-C /path/to/submission/src/
+# 참조 구현 검증
+./run_reference_check.sh
 ```
 
 ### 등급 기준

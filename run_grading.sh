@@ -2,21 +2,21 @@
 # AI SW 역량 인증 시험 — 채점 스크립트
 #
 # 사용법:
-#   ./run_grading.sh <grader-dir> <submission-src-dir>
+#   ./run_grading.sh <grader-dir> <candidate-src-dir>
 #
 # 예시:
-#   ./run_grading.sh grader-C /path/to/submission/src/
-#   ./run_grading.sh grader-D ./submitted_src/
+#   ./run_grading.sh grader-C candidate-C/src/
+#   ./run_grading.sh grader-D candidate-D/src/
 
 SET_NAME=${1:-""}
 SUBMISSION_DIR=${2:-""}
 
 if [ -z "$SET_NAME" ] || [ -z "$SUBMISSION_DIR" ]; then
-    echo "사용법: ./run_grading.sh <grader-dir> <submission-src-dir>"
+    echo "사용법: ./run_grading.sh <grader-dir> <candidate-src-dir>"
     echo ""
     echo "예시:"
-    echo "  ./run_grading.sh grader-C /path/to/submission/src/"
-    echo "  ./run_grading.sh grader-D ./submitted_src/"
+    echo "  ./run_grading.sh grader-C candidate-C/src/"
+    echo "  ./run_grading.sh grader-D candidate-D/src/"
     exit 1
 fi
 
@@ -30,16 +30,22 @@ if [ ! -d "$SUBMISSION_DIR" ]; then
     exit 1
 fi
 
-# 기존 src/ 백업
-BACKUP_DIR=$(mktemp -d)
-cp -r "$SET_NAME/src/"* "$BACKUP_DIR/" 2>/dev/null
+# 채점 후 grader/src/ 를 비우는 cleanup (정상/비정상 종료 모두)
+cleanup() {
+    for f in "$SET_NAME/src/"*.py; do
+        fname=$(basename "$f")
+        if [ "$fname" != "__init__.py" ]; then
+            echo "" > "$f"
+        fi
+    done
+}
+trap cleanup EXIT
 
-# 응시자 제출물을 src/에 복사
+# 응시자 제출물을 grader/src/에 복사
 echo "=== 채점: $SET_NAME ==="
 echo "제출물: $SUBMISSION_DIR"
 echo ""
 
-# __init__.py 보존, 나머지 교체
 for f in "$SET_NAME/src/"*.py; do
     fname=$(basename "$f")
     if [ "$fname" != "__init__.py" ]; then
@@ -103,10 +109,3 @@ else
 fi
 
 echo "등급: $GRADE ($DESC)"
-
-# 원본 복원
-cp -r "$BACKUP_DIR/"* "$SET_NAME/src/" 2>/dev/null
-rm -rf "$BACKUP_DIR"
-
-echo ""
-echo "(src/ 원본 복원 완료)"

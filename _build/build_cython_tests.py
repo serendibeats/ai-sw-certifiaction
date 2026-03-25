@@ -6,7 +6,7 @@ via Cython, and generates pytest-compatible loader stubs.
 
 Usage:
     python3 build_cython_tests.py <set-tests-dir> <output-tests-dir>
-    python3 build_cython_tests.py set-C/tests/ dist/candidate/set-C/tests/
+    python3 build_cython_tests.py set-C/tests/ dist/candidate-C/tests/
 
 Requires: cython, a C compiler (gcc/clang), python3-dev headers
 """

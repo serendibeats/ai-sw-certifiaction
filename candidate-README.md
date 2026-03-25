@@ -12,10 +12,10 @@
 
 | 셋 | 도메인 |
 |----|--------|
-| **set-C** | 전자상거래 시스템 |
-| **set-D** | 태스크/프로젝트 관리 |
-| **set-E** | 데이터 파이프라인 |
-| **set-F** | 메시징 & 알림 |
+| **candidate-C** | 전자상거래 시스템 |
+| **candidate-D** | 태스크/프로젝트 관리 |
+| **candidate-E** | 데이터 파이프라인 |
+| **candidate-F** | 메시징 & 알림 |
 
 각 셋은 독립적이며, 하나를 선택하여 시험을 진행합니다.
 
@@ -23,7 +23,7 @@
 
 ```bash
 # 1. 셋 디렉토리로 이동
-cd set-C
+cd candidate-C
 
 # 2. Step 1 프롬프트 확인 (prompts/step1.md에 있음)
 python3 exam_runner.py show
